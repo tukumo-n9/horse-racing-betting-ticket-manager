@@ -4,11 +4,11 @@ import { ticketAdded } from "./ticketsSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
 function AddTicketForm() {
-  const [date, setDate] = useState<string>();
-  const [racetrack, setRacetrack] = useState<string>();
-  const [raceNumber, setRaceNumber] = useState<string>();
-  const [betAmount, setBetAmount] = useState<string>();
-  const [payout, setPayout] = useState<string>();
+  const [date, setDate] = useState<string>("");
+  const [racetrack, setRacetrack] = useState<string>("");
+  const [raceNumber, setRaceNumber] = useState<string>("");
+  const [betAmount, setBetAmount] = useState<string>("");
+  const [payout, setPayout] = useState<string>("");
 
   const dispatch = useAppDispatch();
 
@@ -37,17 +37,27 @@ function AddTicketForm() {
     <>
       <input
         type="text"
-        value={date}
+        value={date ?? ""}
         placeholder="日付"
         onChange={(e) => setDate(e.target.value)}
       />
-      <select name="" id="" onChange={(e) => setRacetrack(e.target.value)}>
+      <select
+        name=""
+        id=""
+        value={racetrack}
+        onChange={(e) => setRacetrack(e.target.value)}
+      >
         <option value="">未選択</option>
         <option value="京都">京都</option>
         <option value="東京">東京</option>
         <option value="新潟">新潟</option>
       </select>
-      <select name="" id="" onChange={(e) => setRaceNumber(e.target.value)}>
+      <select
+        name=""
+        id=""
+        value={raceNumber}
+        onChange={(e) => setRaceNumber(e.target.value)}
+      >
         <option value="">未選択</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -64,13 +74,13 @@ function AddTicketForm() {
       </select>
       <input
         type="number"
-        value={betAmount}
+        value={betAmount ?? ""}
         placeholder="購入金額"
         onChange={(e) => setBetAmount(e.target.value)}
       />
       <input
         type="number"
-        value={payout}
+        value={payout ?? ""}
         placeholder="払い戻し金額"
         onChange={(e) => setPayout(e.target.value)}
       />

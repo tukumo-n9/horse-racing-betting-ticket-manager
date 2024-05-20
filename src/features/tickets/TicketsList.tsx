@@ -1,7 +1,13 @@
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { ticketDeleted } from "./ticketsSlice";
 
 function TicketsList() {
   const tickets = useAppSelector((state) => state.tickets);
+  const dispatch = useAppDispatch();
+
+  const handleDelete = (id: string) => {
+    dispatch(ticketDeleted(id));
+  };
 
   return (
     <ol>
@@ -20,7 +26,7 @@ function TicketsList() {
             </div>
           </dl>
           <button>編集</button>
-          <button>削除</button>
+          <button onClick={() => handleDelete(ticket.id)}>削除</button>
         </li>
       ))}
     </ol>
