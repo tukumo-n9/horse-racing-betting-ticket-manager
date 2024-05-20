@@ -38,9 +38,15 @@ const ticketsSlice = createSlice({
     ticketAdded(state, action) {
       state.push(action.payload);
     },
+    ticketDeleted(state, action) {
+      const filteredTicketsList = state.filter(
+        (ticket) => ticket.id !== action.payload
+      );
+      return filteredTicketsList;
+    },
   },
 });
 
-export const { ticketAdded } = ticketsSlice.actions;
+export const { ticketAdded, ticketDeleted } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
