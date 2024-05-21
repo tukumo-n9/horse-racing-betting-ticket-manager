@@ -38,7 +38,7 @@ function AddTicketForm() {
   return (
     <>
       <input
-        type="text"
+        type="date"
         value={date ?? ""}
         placeholder="日付"
         onChange={(e) => setDate(e.target.value)}
