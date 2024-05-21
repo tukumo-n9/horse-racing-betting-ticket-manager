@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAppDispatch } from "../../hooks";
 import { ticketAdded } from "./ticketsSlice";
 import { nanoid } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 
 function AddTicketForm() {
   const [date, setDate] = useState<string>("");
@@ -11,6 +12,7 @@ function AddTicketForm() {
   const [payout, setPayout] = useState<string>("");
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSaveTicketClicked = () => {
     if (date && racetrack && raceNumber && betAmount && payout) {
@@ -86,6 +88,14 @@ function AddTicketForm() {
       />
       <button type="button" onClick={onSaveTicketClicked}>
         馬券を追加
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        戻る
       </button>
     </>
   );
