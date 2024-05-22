@@ -8,6 +8,7 @@ import Root from "./routes/Root.tsx";
 import ErrorPage from "./ErrorPage.tsx";
 import AddTicket from "./routes/AddTicket.tsx";
 import Index from "./routes/Index.tsx";
+import SingleTicket from "./routes/SingleTicket.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
         path: "add-ticket/",
         element: <AddTicket />,
       },
+      { path: "tickets/:ticketId", element: <SingleTicket /> },
     ],
   },
 ]);
