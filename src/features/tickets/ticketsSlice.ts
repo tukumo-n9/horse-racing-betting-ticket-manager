@@ -14,7 +14,7 @@ const initialState = [
   {
     id: "1",
     createDate: "1716107513229",
-    date: "2024年5月18日",
+    date: "2024-05-18",
     racetrack: "京都",
     raceNumber: "5",
     betAmount: 100,
@@ -23,7 +23,7 @@ const initialState = [
   {
     id: "2",
     createDate: "1716107513229",
-    date: "2024年5月18日",
+    date: "2024-05-18",
     racetrack: "京都",
     raceNumber: "5",
     betAmount: 100,

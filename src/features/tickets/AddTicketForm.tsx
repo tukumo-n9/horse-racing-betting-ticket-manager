@@ -3,8 +3,6 @@ import { useAppDispatch } from "../../hooks";
 import { ticketAdded } from "./ticketsSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { format, parse } from "date-fns";
-import { ja } from "date-fns/locale";
 
 function AddTicketForm() {
   const [date, setDate] = useState<string>("");
@@ -22,11 +20,7 @@ function AddTicketForm() {
         ticketAdded({
           id: nanoid(),
           createDate: Date.now(),
-          date: format(
-            parse(date, "yyyy-MM-dd", new Date()),
-            "y年M月d日(eee)",
-            { locale: ja }
-          ),
+          date,
           racetrack,
           raceNumber,
           betAmount,

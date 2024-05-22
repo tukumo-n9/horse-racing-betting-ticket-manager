@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../hooks";
+import { format, parse } from "date-fns";
+import { ja } from "date-fns/locale";
 
 export default function SingleTicket() {
   const { ticketId } = useParams();
@@ -14,7 +16,13 @@ export default function SingleTicket() {
 
   return (
     <>
-      <p>{ticket.date}</p>
+      <p>
+        {format(
+          parse(ticket.date, "yyyy-MM-dd", new Date()),
+          "y年M月d日(eee)",
+          { locale: ja }
+        )}
+      </p>
       <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
       <dl>
         <div>
