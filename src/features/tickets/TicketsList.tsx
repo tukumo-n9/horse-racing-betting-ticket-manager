@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ticketDeleted } from "./ticketsSlice";
 
@@ -13,20 +14,22 @@ function TicketsList() {
     <ol>
       {tickets.map((ticket) => (
         <li key={ticket.id}>
-          <p>{ticket.date}</p>
-          <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
-          <dl>
-            <div>
-              <dt>購入金額</dt>
-              <dd>￥{ticket.betAmount}</dd>
-            </div>
-            <div>
-              <dt>払い戻し金額</dt>
-              <dd>￥{ticket.payout}</dd>
-            </div>
-          </dl>
-          <button>編集</button>
-          <button onClick={() => handleDelete(ticket.id)}>削除</button>
+          <Link to={`tickets/${ticket.id}`}>
+            <p>{ticket.date}</p>
+            <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
+            <dl>
+              <div>
+                <dt>購入金額</dt>
+                <dd>￥{ticket.betAmount}</dd>
+              </div>
+              <div>
+                <dt>払い戻し金額</dt>
+                <dd>￥{ticket.payout}</dd>
+              </div>
+            </dl>
+            <button>編集</button>
+            <button onClick={() => handleDelete(ticket.id)}>削除</button>
+          </Link>
         </li>
       ))}
     </ol>
