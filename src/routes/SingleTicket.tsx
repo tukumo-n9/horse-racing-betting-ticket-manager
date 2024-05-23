@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAppSelector } from "../hooks";
 import { format, parse } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -34,7 +34,7 @@ export default function SingleTicket() {
           <dd>￥{ticket.payout}</dd>
         </div>
       </dl>
-      <button>編集</button>
+      <Link to={`/tickets/${ticket.id}/edit`}>編集</Link>
       <button>削除</button>
     </>
   );
