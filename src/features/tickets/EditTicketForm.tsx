@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks";
-import { ticketAdded } from "./ticketsSlice";
-import { nanoid } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { ticketUpdated } from "./ticketsSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
-function AddTicketForm() {
-  const [date, setDate] = useState<string>("");
-  const [racetrack, setRacetrack] = useState<string>("");
-  const [raceNumber, setRaceNumber] = useState<string>("");
-  const [betAmount, setBetAmount] = useState<string>("");
-  const [payout, setPayout] = useState<string>("");
+export default function EditTicketForm() {
+  const { ticketId } = useParams();
+
+  const ticket = useAppSelector((state) =>
+    state.tickets.find((ticket) => ticket.id === ticketId)
+  );
+
+  const [date, setDate] = useState<string>(ticket?.date);
+  const [racetrack, setRacetrack] = useState<string>(ticket?.racetrack);
+  const [raceNumber, setRaceNumber] = useState<string>(ticket?.raceNumber);
+  const [betAmount, setBetAmount] = useState<string>(ticket?.betAmount);
+  const [payout, setPayout] = useState<string>(ticket?.payout);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -17,9 +22,9 @@ function AddTicketForm() {
   const onSaveTicketClicked = () => {
     if (date && racetrack && raceNumber && betAmount && payout) {
       dispatch(
-        ticketAdded({
-          id: nanoid(),
-          createDate: Date.now(),
+        ticketUpdated({
+          id: ticketId,
+          updateDate: Date.now(),
           date,
           racetrack,
           raceNumber,
@@ -87,7 +92,7 @@ function AddTicketForm() {
         onChange={(e) => setPayout(e.target.value)}
       />
       <button type="button" onClick={onSaveTicketClicked}>
-        馬券を追加
+        完了
       </button>
       <button
         type="button"
@@ -100,5 +105,3 @@ function AddTicketForm() {
     </>
   );
 }
-
-export default AddTicketForm;

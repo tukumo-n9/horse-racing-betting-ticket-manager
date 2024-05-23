@@ -6,9 +6,10 @@ import { store } from "./app/store.ts";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./routes/Root.tsx";
 import ErrorPage from "./ErrorPage.tsx";
-import AddTicket from "./routes/AddTicket.tsx";
 import Index from "./routes/Index.tsx";
 import SingleTicket from "./routes/SingleTicket.tsx";
+import AddTicketForm from "./features/tickets/AddTicketForm.tsx";
+import EditTicketForm from "./features/tickets/EditTicketForm.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,9 +20,10 @@ const router = createBrowserRouter([
       { index: true, element: <Index /> },
       {
         path: "add-ticket/",
-        element: <AddTicket />,
+        element: <AddTicketForm />,
       },
       { path: "tickets/:ticketId", element: <SingleTicket /> },
+      { path: "tickets/:ticketId/edit", element: <EditTicketForm /> },
     ],
   },
 ]);

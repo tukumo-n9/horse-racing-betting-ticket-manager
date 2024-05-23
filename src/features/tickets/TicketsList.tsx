@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ticketDeleted } from "./ticketsSlice";
+import { format, parse } from "date-fns";
+import { ja } from "date-fns/locale";
 
 function TicketsList() {
   const tickets = useAppSelector((state) => state.tickets);
@@ -15,7 +17,13 @@ function TicketsList() {
       {tickets.map((ticket) => (
         <li key={ticket.id}>
           <Link to={`tickets/${ticket.id}`}>
-            <p>{ticket.date}</p>
+            <p>
+              {format(
+                parse(ticket.date, "yyyy-MM-dd", new Date()),
+                "y年M月d日(eee)",
+                { locale: ja }
+              )}
+            </p>
             <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
             <dl>
               <div>
