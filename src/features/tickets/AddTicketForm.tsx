@@ -32,6 +32,7 @@ function AddTicketForm() {
       setRaceNumber("");
       setBetAmount("");
       setPayout("");
+      navigate("/");
     }
   };
 
