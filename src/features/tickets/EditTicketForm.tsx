@@ -37,6 +37,7 @@ export default function EditTicketForm() {
       setRaceNumber("");
       setBetAmount("");
       setPayout("");
+      navigate(`/tickets/${ticketId}`);
     }
   };
 
