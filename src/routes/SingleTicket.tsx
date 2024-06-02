@@ -24,16 +24,11 @@ export default function SingleTicket() {
         )}
       </p>
       <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
-      <dl>
-        <div>
-          <dt>購入金額</dt>
-          <dd>￥{ticket.betAmount}</dd>
-        </div>
-        <div>
-          <dt>払い戻し金額</dt>
-          <dd>￥{ticket.payout}</dd>
-        </div>
-      </dl>
+      <p>
+        {ticket.typeName}：{ticket.typeNumbers.join(" - ")}
+      </p>
+      <p>購入金額：￥{ticket.betAmount}</p>
+      <p>払い戻し金額：￥{ticket.payout}</p>
       <Link to={`/tickets/${ticket.id}/edit`}>編集</Link>
       <button>削除</button>
     </>
