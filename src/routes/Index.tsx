@@ -5,7 +5,7 @@ export default function Index() {
   return (
     <>
       <Link to={`/add-ticket/`}>馬券を追加</Link>
-      <TicketsList />;
+      <TicketsList />
     </>
   );
 }

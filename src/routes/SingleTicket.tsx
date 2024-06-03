@@ -39,6 +39,7 @@ export default function SingleTicket() {
       <p>払い戻し金額：￥{ticket.payout}</p>
       <Link to={`/tickets/${ticket.id}/edit`}>編集</Link>
       <button onClick={() => handleDelete(ticket.id)}>削除</button>
+      <Link to={"/"}>一覧に戻る</Link>
     </>
   );
 }
