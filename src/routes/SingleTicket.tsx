@@ -1,14 +1,22 @@
-import { Link, useParams } from "react-router-dom";
-import { useAppSelector } from "../hooks";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { format, parse } from "date-fns";
 import { ja } from "date-fns/locale";
+import { ticketDeleted } from "../features/tickets/ticketsSlice";
 
 export default function SingleTicket() {
   const { ticketId } = useParams();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const ticket = useAppSelector((state) =>
     state.tickets.find((ticket) => ticket.id === ticketId)
   );
+
+  const handleDelete = (id: string) => {
+    dispatch(ticketDeleted(id));
+    navigate("/");
+  };
 
   if (!ticket) {
     return <p>馬券が見つかりませんでした。</p>;
@@ -30,7 +38,7 @@ export default function SingleTicket() {
       <p>購入金額：￥{ticket.betAmount}</p>
       <p>払い戻し金額：￥{ticket.payout}</p>
       <Link to={`/tickets/${ticket.id}/edit`}>編集</Link>
-      <button>削除</button>
+      <button onClick={() => handleDelete(ticket.id)}>削除</button>
     </>
   );
 }
