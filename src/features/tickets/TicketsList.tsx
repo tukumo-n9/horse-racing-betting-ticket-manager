@@ -1,16 +1,10 @@
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { ticketDeleted } from "./ticketsSlice";
+import { useAppSelector } from "../../hooks";
 import { format, parse } from "date-fns";
 import { ja } from "date-fns/locale";
 
 function TicketsList() {
   const tickets = useAppSelector((state) => state.tickets);
-  const dispatch = useAppDispatch();
-
-  const handleDelete = (id: string) => {
-    dispatch(ticketDeleted(id));
-  };
 
   return (
     <ol>
@@ -30,8 +24,6 @@ function TicketsList() {
             </p>
             <p>購入金額：￥{ticket.betAmount}</p>
             <p>払い戻し金額：￥{ticket.payout}</p>
-            <button>編集</button>
-            <button onClick={() => handleDelete(ticket.id)}>削除</button>
           </Link>
         </li>
       ))}
