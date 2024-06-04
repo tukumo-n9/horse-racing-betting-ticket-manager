@@ -26,7 +26,7 @@ const initialState = [
   },
   {
     id: "2",
-    createDate: 1716107513229,
+    createDate: 1716107513225,
     updateDate: -1,
     date: "2024-05-18",
     racetrack: "京都",
