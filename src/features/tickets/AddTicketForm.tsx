@@ -83,9 +83,15 @@ function AddTicketForm() {
         <option value="12">12R</option>
       </select>
       <select value={typeName} onChange={(e) => setTypeName(e.target.value)}>
-        <option value="">券種</option>
+        <option value="">種類</option>
         <option value="単勝">単勝</option>
+        <option value="複勝">複勝</option>
+        <option value="応援馬券">応援馬券</option>
+        <option value="枠連">枠連</option>
         <option value="馬連">馬連</option>
+        <option value="馬単">馬単</option>
+        <option value="ワイド">ワイド</option>
+        <option value="三連複">三連複</option>
         <option value="三連単">三連単</option>
       </select>
       <label>
