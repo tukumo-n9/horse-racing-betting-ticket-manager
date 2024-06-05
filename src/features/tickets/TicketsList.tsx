@@ -38,6 +38,7 @@ function TicketsList() {
             </p>
             <p>購入金額：￥{ticket.betAmount}</p>
             <p>払い戻し金額：￥{ticket.payout}</p>
+            <p>収支：￥{Number(ticket.payout) - Number(ticket.betAmount)}</p>
           </Link>
         </li>
       ))}
