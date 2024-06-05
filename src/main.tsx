@@ -10,6 +10,7 @@ import Index from "./routes/Index.tsx";
 import SingleTicket from "./routes/SingleTicket.tsx";
 import AddTicketForm from "./features/tickets/AddTicketForm.tsx";
 import EditTicketForm from "./features/tickets/EditTicketForm.tsx";
+import Login from "./routes/Login.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       },
       { path: "tickets/:ticketId", element: <SingleTicket /> },
       { path: "tickets/:ticketId/edit", element: <EditTicketForm /> },
+      { path: "login", element: <Login /> },
     ],
   },
 ]);
