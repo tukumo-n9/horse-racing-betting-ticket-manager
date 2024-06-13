@@ -40,8 +40,11 @@ const initialState = [
 
 const ticketsSlice = createSlice({
   name: "tickets",
-  initialState,
+  initialState: [],
   reducers: {
+    ticketInitialized(state, action) {
+      return action.payload;
+    },
     ticketAdded(state, action) {
       state.push(action.payload);
     },
@@ -78,7 +81,7 @@ const ticketsSlice = createSlice({
   },
 });
 
-export const { ticketAdded, ticketDeleted, ticketUpdated } =
+export const { ticketInitialized, ticketAdded, ticketDeleted, ticketUpdated } =
   ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
