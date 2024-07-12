@@ -19,6 +19,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Index /> },
+      { path: "*", element: <ErrorPage /> },
       {
         path: "add-ticket/",
         element: <AddTicketForm />,

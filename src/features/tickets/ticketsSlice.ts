@@ -1,51 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type ticketState = {
+export type Ticket = {
   id: string;
   createDate: number;
   updateDate: number;
   date: string;
   racetrack: string;
   raceNumber: string;
+  typeName: string;
+  typeNumbers: string[];
   betAmount: string;
   payout: string;
 };
 
-const initialState = [
-  {
-    id: "1",
-    createDate: 1716107513229,
-    updateDate: -1,
-    date: "2024-05-18",
-    racetrack: "京都",
-    raceNumber: "5",
-    typeName: "単勝",
-    typeNumbers: ["1"],
-    betAmount: "200",
-    payout: "1000",
-  },
-  {
-    id: "2",
-    createDate: 1716107513225,
-    updateDate: -1,
-    date: "2024-05-18",
-    racetrack: "京都",
-    raceNumber: "5",
-    typeName: "三連単",
-    typeNumbers: ["1", "8", "15"],
-    betAmount: "500",
-    payout: "200000",
-  },
-];
+type TicketsState = Ticket[];
+const initialState: TicketsState = [];
 
 const ticketsSlice = createSlice({
   name: "tickets",
-  initialState: [],
+  initialState,
   reducers: {
     ticketInitialized(state, action) {
-      return action.payload;
+      let copiedState = [...state];
+      copiedState = action.payload;
+      return copiedState;
     },
-    ticketAdded(state, action) {
+    ticketAdded(state, action: PayloadAction<Ticket>) {
       state.push(action.payload);
     },
     ticketDeleted(state, action) {
@@ -66,7 +46,7 @@ const ticketsSlice = createSlice({
         betAmount,
         payout,
       } = action.payload;
-      const existingTicket = state.find((ticket) => ticket.id === id);
+      const existingTicket: Ticket = state.find((ticket) => ticket.id === id)!;
       if (existingTicket) {
         existingTicket.updateDate = updateDate;
         existingTicket.date = date;

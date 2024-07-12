@@ -8,7 +8,6 @@ import { auth, db } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 function AddTicketForm() {
-  const [updateDate, setUpdateDate] = useState<number>(-1);
   const [date, setDate] = useState<string>("");
   const [racetrack, setRacetrack] = useState<string>("");
   const [raceNumber, setRaceNumber] = useState<string>("");
