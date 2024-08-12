@@ -5,25 +5,23 @@ import { ja } from "date-fns/locale";
 import { ticketDeleted } from "../features/tickets/ticketsSlice";
 import { deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
 
 export default function SingleTicket() {
   const { ticketId } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const authState = useAppSelector((state) => state.auth);
 
   const ticket = useAppSelector((state) =>
     state.tickets.find((ticket) => ticket.id === ticketId)
   );
 
   const handleDelete = async (id: string) => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        dispatch(ticketDeleted(id));
-        await deleteDoc(doc(db, "users", user.uid, "tickets", id));
-        navigate("/");
-      }
-    });
+    if (authState) {
+      dispatch(ticketDeleted(id));
+      await deleteDoc(doc(db, "users", auth.currentUser!.uid, "tickets", id));
+      navigate("/");
+    }
   };
 
   if (!ticket) {

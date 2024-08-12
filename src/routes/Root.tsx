@@ -1,22 +1,24 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Outlet, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { ticketInitialized } from "../features/tickets/ticketsSlice";
+import { authUpdate } from "../features/auth/authSlice";
 
 export default function Root() {
-  const [isSignIn, setIsSignIn] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const authState = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     return onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log("Sign-in successful.");
-        setIsSignIn(true);
-        const ticketsRef = collection(db, "users", user.uid, "tickets");
+        dispatch(authUpdate(true));
+        const ticketsRef = collection(db, "users", user.uid, "tickets"); // FIXME:tickets以下で取得するのがセキュリティルールと反している？セキュリティルールの方をlistかreadにする、tickets以下以下の読み取りを許可する
         const ticketsDocs = await getDocs(ticketsRef);
         if (ticketsDocs) {
           const ticketsData = ticketsDocs.docs.map((doc) => {
@@ -27,7 +29,6 @@ export default function Root() {
         navigate("/");
       } else {
         console.log("You should sign-in.");
-        setIsSignIn(false);
         navigate("/login/");
       }
     });
@@ -36,7 +37,7 @@ export default function Root() {
   const handleSignOut = () => {
     signOut(auth).then(() => {
       console.log("Sign-out successful.");
-      setIsSignIn(false);
+      dispatch(authUpdate(false));
     });
   };
 
@@ -45,7 +46,7 @@ export default function Root() {
   return (
     <>
       <h1>馬券収支管理アプリ</h1>
-      {isSignIn && (
+      {authState && (
         <button type="button" onClick={handleSignOut}>
           ログアウト
         </button>
