@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ticketAdded } from "./ticketsSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
 
 function AddTicketForm() {
   const [date, setDate] = useState<string>("");
@@ -18,6 +17,8 @@ function AddTicketForm() {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const authState = useAppSelector((state) => state.auth);
 
   const onSaveClicked = async () => {
     if (
@@ -33,26 +34,11 @@ function AddTicketForm() {
       const createDate = Date.now();
       const updateDate = -1;
 
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          dispatch(
-            ticketAdded({
-              id,
-              createDate,
-              updateDate,
-              date,
-              racetrack,
-              raceNumber,
-              typeName,
-              typeNumbers,
-              betAmount,
-              payout,
-            })
-          );
-
-          await setDoc(doc(db, "users", user.uid, "tickets", id), {
-            id: id,
-            createDate: createDate,
+      if (authState) {
+        dispatch(
+          ticketAdded({
+            id,
+            createDate,
             updateDate,
             date,
             racetrack,
@@ -61,9 +47,22 @@ function AddTicketForm() {
             typeNumbers,
             betAmount,
             payout,
-          });
-        }
-      });
+          })
+        );
+
+        await setDoc(doc(db, "users", auth.currentUser!.uid, "tickets", id), {
+          id: id,
+          createDate: createDate,
+          updateDate,
+          date,
+          racetrack,
+          raceNumber,
+          typeName,
+          typeNumbers,
+          betAmount,
+          payout,
+        });
+      }
 
       setDate("");
       setRacetrack("");

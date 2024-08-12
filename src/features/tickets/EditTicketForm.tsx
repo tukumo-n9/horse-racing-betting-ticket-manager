@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ticketUpdated } from "./ticketsSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
@@ -37,6 +36,8 @@ export default function EditTicketForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const authState = useAppSelector((state) => state.auth);
+
   const onSaveTicketClicked = async () => {
     if (
       date &&
@@ -48,45 +49,44 @@ export default function EditTicketForm() {
       payout
     ) {
       const updateDate = Date.now();
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          dispatch(
-            ticketUpdated({
-              id: ticketId,
-              updateDate,
-              date,
-              racetrack,
-              raceNumber,
-              typeName,
-              typeNumbers,
-              betAmount,
-              payout,
-            })
-          );
-          await updateDoc(
-            doc(db!, "users"!, user!.uid!, "tickets"!, ticketId!),
-            {
-              id: ticketId,
-              updateDate,
-              date,
-              racetrack,
-              raceNumber,
-              typeName,
-              typeNumbers,
-              betAmount,
-              payout,
-            }
-          );
-          setDate("");
-          setRacetrack("");
-          setRaceNumber("");
-          setTypeName("");
-          setTypeNumbers([]);
-          setBetAmount("");
-          setPayout("");
-          navigate(`/tickets/${ticketId}`);
-        }
-      });
+
+      if (authState) {
+        dispatch(
+          ticketUpdated({
+            id: ticketId,
+            updateDate,
+            date,
+            racetrack,
+            raceNumber,
+            typeName,
+            typeNumbers,
+            betAmount,
+            payout,
+          })
+        );
+        await updateDoc(
+          doc(db!, "users"!, auth.currentUser!.uid!, "tickets"!, ticketId!),
+          {
+            id: ticketId,
+            updateDate,
+            date,
+            racetrack,
+            raceNumber,
+            typeName,
+            typeNumbers,
+            betAmount,
+            payout,
+          }
+        );
+        setDate("");
+        setRacetrack("");
+        setRaceNumber("");
+        setTypeName("");
+        setTypeNumbers([]);
+        setBetAmount("");
+        setPayout("");
+        navigate(`/tickets/${ticketId}`);
+      }
     }
   };
 

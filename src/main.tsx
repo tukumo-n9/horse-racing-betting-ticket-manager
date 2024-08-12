@@ -21,12 +21,12 @@ const router = createBrowserRouter([
       { index: true, element: <Index /> },
       { path: "*", element: <ErrorPage /> },
       {
-        path: "add-ticket/",
+        path: "/add-ticket",
         element: <AddTicketForm />,
       },
-      { path: "tickets/:ticketId", element: <SingleTicket /> },
-      { path: "tickets/:ticketId/edit", element: <EditTicketForm /> },
-      { path: "login", element: <Login /> },
+      { path: "/tickets/:ticketId", element: <SingleTicket /> },
+      { path: "/tickets/:ticketId/edit", element: <EditTicketForm /> },
+      { path: "/login", element: <Login /> },
     ],
   },
 ]);

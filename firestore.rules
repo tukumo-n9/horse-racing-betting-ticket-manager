@@ -1,0 +1,34 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // サインインの認証
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 本人の認証
+    function isUserAuthenticated(userId) {
+      return isAuthenticated() && userId == request.auth.uid;
+    }
+
+    match /users/{userId} {
+      match /tickets/{ticketId} {
+
+        // ログインしたユーザーは、自身の馬券データを全て閲覧できる
+        allow read: if isUserAuthenticated(userId);
+
+        // ログインしたユーザーは、馬券データの作成、更新、削除ができる
+        allow create: if isUserAuthenticated(userId);
+
+        // 作成した日付は、他の馬券データが更新されても変更されないため、変更されていないか検証する
+        allow update: if  isUserAuthenticated(userId)
+        && request.resource.data.createDate == resource.data.createDate;
+
+        // ログインしたユーザーのみ、自身のドキュメントを削除できる
+        allow delete: if isUserAuthenticated(userId);
+      }
+    }
+  }
+}

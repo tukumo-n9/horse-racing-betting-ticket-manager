@@ -1,9 +1,10 @@
-import { signInWithRedirect } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
+import { browserPopupRedirectResolver } from "firebase/auth";
 import { auth, provider } from "../firebase";
 
 export default function Login() {
   const handleLogin = () => {
-    signInWithRedirect(auth, provider);
+    signInWithPopup(auth, provider, browserPopupRedirectResolver);
   };
   return (
     <button type="button" onClick={handleLogin}>

@@ -20,10 +20,8 @@ const ticketsSlice = createSlice({
   name: "tickets",
   initialState,
   reducers: {
-    ticketInitialized(state, action) {
-      let copiedState = [...state];
-      copiedState = action.payload;
-      return copiedState;
+    ticketInitialized(_state, action) {
+      return action.payload;
     },
     ticketAdded(state, action: PayloadAction<Ticket>) {
       state.push(action.payload);
