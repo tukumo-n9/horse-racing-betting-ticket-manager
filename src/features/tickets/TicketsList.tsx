@@ -23,8 +23,11 @@ function TicketsList() {
   return (
     <ol>
       {sortedTickets.map((ticket) => (
-        <li key={ticket.id}>
-          <Link to={`tickets/${ticket.id}`}>
+        <li key={ticket.id} className="[&:not(:first-child)]:mt-4">
+          <Link
+            to={`tickets/${ticket.id}`}
+            className="block border-b border-green-500 rounded-t bg-white/[0.5] hover:bg-white/[1] backdrop-blur-3xl p-4"
+          >
             <p>
               {format(
                 parse(ticket.date, "yyyy-MM-dd", new Date()),

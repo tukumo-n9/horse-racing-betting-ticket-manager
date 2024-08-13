@@ -30,23 +30,44 @@ export default function SingleTicket() {
 
   return (
     <>
-      <p>
-        {format(
-          parse(ticket.date, "yyyy-MM-dd", new Date()),
-          "y年M月d日(eee)",
-          { locale: ja }
-        )}
-      </p>
-      <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
-      <p>
-        {ticket.typeName}：{ticket.typeNumbers.join(" - ")}
-      </p>
-      <p>購入金額：￥{ticket.betAmount}</p>
-      <p>払い戻し金額：￥{ticket.payout}</p>
-      <p>収支：￥{Number(ticket.payout) - Number(ticket.betAmount)}</p>
-      <Link to={`/tickets/${ticket.id}/edit`}>編集</Link>
-      <button onClick={() => handleDelete(ticket.id)}>削除</button>
-      <Link to={"/"}>一覧に戻る</Link>
+      <div className="bg-white p-4 rounded">
+        <p>
+          {format(
+            parse(ticket.date, "yyyy-MM-dd", new Date()),
+            "y年M月d日(eee)",
+            { locale: ja }
+          )}
+        </p>
+        <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
+        <p>
+          {ticket.typeName}：{ticket.typeNumbers.join(" - ")}
+        </p>
+        <p>購入金額：￥{ticket.betAmount}</p>
+        <p>払い戻し金額：￥{ticket.payout}</p>
+        <p>収支：￥{Number(ticket.payout) - Number(ticket.betAmount)}</p>
+        <div className="flex justify-end gap-2 mt-4">
+          <Link
+            to={`/tickets/${ticket.id}/edit`}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          >
+            編集
+          </Link>
+          <button
+            onClick={() => handleDelete(ticket.id)}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            削除
+          </button>
+        </div>
+      </div>
+      <div className="mt-8">
+        <Link
+          to={"/"}
+          className="block w-fit mx-auto bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+        >
+          一覧に戻る
+        </Link>
+      </div>
     </>
   );
 }

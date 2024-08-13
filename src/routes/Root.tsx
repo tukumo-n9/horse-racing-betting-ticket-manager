@@ -18,7 +18,7 @@ export default function Root() {
       if (user) {
         console.log("Sign-in successful.");
         dispatch(authUpdate(true));
-        const ticketsRef = collection(db, "users", user.uid, "tickets"); // FIXME:tickets以下で取得するのがセキュリティルールと反している？セキュリティルールの方をlistかreadにする、tickets以下以下の読み取りを許可する
+        const ticketsRef = collection(db, "users", user.uid, "tickets");
         const ticketsDocs = await getDocs(ticketsRef);
         if (ticketsDocs) {
           const ticketsData = ticketsDocs.docs.map((doc) => {
@@ -45,15 +45,29 @@ export default function Root() {
 
   return (
     <>
-      <h1>馬券収支管理アプリ</h1>
-      {authState && (
-        <button type="button" onClick={handleSignOut}>
-          ログアウト
-        </button>
-      )}
-      {user !== null && <p>{user.displayName}</p>}
-      <div>
-        <Outlet />
+      <div className="min-h-screen p-8">
+        <div className="max-w-screen-sm mx-auto">
+          <header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-center">
+              馬券収支管理アプリ
+            </h1>
+            <div className="text-right mt-8">
+              {user !== null && <p>{user.displayName}</p>}
+              {authState && (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-1 px-2 text-sm border border-green-500 hover:border-transparent rounded mt-2"
+                >
+                  ログアウト
+                </button>
+              )}
+            </div>
+          </header>
+          <div className="mt-6">
+            <Outlet />
+          </div>
+        </div>
       </div>
     </>
   );
