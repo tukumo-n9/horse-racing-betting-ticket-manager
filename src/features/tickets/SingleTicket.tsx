@@ -1,7 +1,6 @@
-import { format, parse } from "date-fns";
-import { ja } from "date-fns/locale";
 import { Link } from "react-router-dom";
 import { Ticket } from "./ticketsSlice";
+import { formatDate } from "../../utils/formatDate";
 
 interface SingleTicketProps {
   ticket: Ticket;
@@ -14,13 +13,7 @@ function SingleTicket({ ticket }: SingleTicketProps) {
         to={`tickets/${ticket.id}`}
         className="block border-b border-green-500 rounded-t bg-white/[0.5] hover:bg-white/[1] backdrop-blur-3xl p-4"
       >
-        <p>
-          {format(
-            parse(ticket.date, "yyyy-MM-dd", new Date()),
-            "y年M月d日(eee)",
-            { locale: ja }
-          )}
-        </p>
+        <p>{formatDate(ticket.date)}</p>
         <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
         <p>
           {ticket.typeName}：{ticket.typeNumbers.join(" - ")}

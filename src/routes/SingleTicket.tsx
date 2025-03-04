@@ -1,10 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { format, parse } from "date-fns";
-import { ja } from "date-fns/locale";
 import { ticketDeleted } from "../features/tickets/ticketsSlice";
 import { deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { formatDate } from "../utils/formatDate";
 
 export default function SingleTicket() {
   const { ticketId } = useParams();
@@ -31,13 +30,7 @@ export default function SingleTicket() {
   return (
     <>
       <div className="bg-white p-4 rounded">
-        <p>
-          {format(
-            parse(ticket.date, "yyyy-MM-dd", new Date()),
-            "y年M月d日(eee)",
-            { locale: ja }
-          )}
-        </p>
+        <p>{formatDate(ticket.date)}</p>
         <p>{`${ticket.racetrack}${ticket.raceNumber}R`}</p>
         <p>
           {ticket.typeName}：{ticket.typeNumbers.join(" - ")}
